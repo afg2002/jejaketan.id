@@ -35,8 +35,9 @@ CREATE TABLE IF NOT EXISTS `User` (
 
 -- Dumping data for table jejaketan.User: ~2 rows (approximately)
 INSERT INTO `User` (`user_id`, `email`, `password`, `full_name`, `address`, `phone_number`, `role`, `created_at`, `updated_at`) VALUES
-	(1, 'admin@admin.com', '$2a$12$fL.zPXVrGBkqdHNuLW9TteaVknidcvR7Vu8w/66YU0fwsJI0asqZy', 'John Bromoka1', '123 Main St, City', '123456789', 'admin', NULL, '2023-07-03 17:03:02'),
-	(9, 'user@user.com', '$2a$12$UzvYfeXCPqJiUPwRfbK9G.6wRwQbUP8VwfuY2EP9nXF52iSntYcNC', 'Afghan EP', 'Bro', '0851568238645', 'user', '2023-07-03 21:57:31', NULL);
+    (1, 'admin@admin.com', '$2a$12$fL.zPXVrGBkqdHNuLW9TteaVknidcvR7Vu8w/66YU0fwsJI0asqZy', 'John Bromoka1', '123 Main St, City', '123456789', 'admin', NULL, '2023-07-03 17:03:02'),
+    (2, 'user@user.com', '$2a$12$UzvYfeXCPqJiUPwRfbK9G.6wRwQbUP8VwfuY2EP9nXF52iSntYcNC', 'Nama Pengguna', 'Alamat Pengguna', '987654321', 'user', NULL, '2023-07-03 17:03:02');
+
 
 -- Dumping structure for table jejaketan.Cart
 CREATE TABLE IF NOT EXISTS `Cart` (
@@ -50,9 +51,7 @@ CREATE TABLE IF NOT EXISTS `Cart` (
 
 -- Dumping data for table jejaketan.Cart: ~3 rows (approximately)
 INSERT INTO `Cart` (`cart_id`, `user_id`, `created_at`) VALUES
-	(5, 1, NULL),
-	(6, NULL, NULL),
-	(7, 9, NULL);
+	(5, 1, NULL);
 
   
 -- Dumping structure for table jejaketan.Product
@@ -128,8 +127,6 @@ CREATE TABLE IF NOT EXISTS `OrderItem` (
 
 -- Dumping data for table jejaketan.OrderItem: ~11 rows (approximately)
 INSERT INTO `OrderItem` (`order_item_id`, `order_id`, `product_id`, `quantity`, `subtotal`) VALUES
-	(33, 30, 59, 1, 599000.00),
-	(34, 31, 60, 1, 999000.00),
 	(35, 32, 59, 1, 599000.00),
 	(36, 33, 59, 1, 599000.00);
 
@@ -146,10 +143,6 @@ CREATE TABLE IF NOT EXISTS `Payment` (
 
 -- Dumping data for table jejaketan.Payment: ~0 rows (approximately)
 INSERT INTO `Payment` (`payment_id`, `order_id`, `image_url`, `created_at`) VALUES
-	(32, 31, 'proof_64a59b3747a11.webp', '2023-07-05 16:32:55'),
-	(33, 31, 'proof_64a59b507af8f.webp', '2023-07-05 16:33:20'),
-	(34, 31, 'proof_64a59c39ee193.webp', '2023-07-05 16:37:13'),
-	(35, 31, 'proof_64a59c589b8f8.webp', '2023-07-05 16:37:44'),
 	(36, 32, 'proof_64a59cc57fbb9.webp', '2023-07-05 16:39:33'),
 	(37, 32, 'proof_64a59d4df0b1a.webp', '2023-07-05 16:41:49');
 
@@ -165,17 +158,6 @@ CREATE TABLE IF NOT EXISTS `PaymentMethod` (
 
 -- Dumping data for table jejaketan.PaymentMethod: ~9 rows (approximately)
 INSERT INTO `PaymentMethod` (`payment_id`, `order_id`, `payment_method`) VALUES
-	(18, 20, 'bank_bca'),
-	(20, 22, 'bank_mandiri'),
-	(21, 23, 'bank_mandiri'),
-	(22, 24, 'ewallet_gopay'),
-	(23, 25, 'bank_bca'),
-	(24, 26, 'bank_bni'),
-	(25, 27, 'bank_mandiri'),
-	(26, 28, 'bank_mandiri'),
-	(27, 29, 'bank_mandiri'),
-	(28, 30, 'bank_bni'),
-	(29, 31, 'bank_mandiri'),
 	(30, 32, 'bank_mandiri'),
 	(31, 33, 'bank_mandiri');
 
@@ -194,7 +176,6 @@ CREATE TABLE IF NOT EXISTS `ShippingDetails` (
 
 -- Dumping data for table jejaketan.ShippingDetails: ~0 rows (approximately)
 INSERT INTO `ShippingDetails` (`shipping_id`, `order_id`, `full_name`, `email`, `address`, `phone_number`) VALUES
-	(29, 31, 'John Bromoka1', 'admin@admin.com', '123 Main St, City', '123456789'),
 	(30, 32, 'John Bromoka1', 'admin@admin.com', '123 Main St, City', '123456789'),
 	(31, 33, 'John Bromoka1', 'admin@admin.com', '123 Main St, City', '123456789');
 
