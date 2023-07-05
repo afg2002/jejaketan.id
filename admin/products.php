@@ -45,7 +45,7 @@ if (!$result) {
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <select class="input" name="category">
+                                <select class="input" name="category" required>
                                     <option selected disabled> Pilih Category </option>
                                     <option> Men's Jacket </option>
                                     <option> Women's Jacket </option>

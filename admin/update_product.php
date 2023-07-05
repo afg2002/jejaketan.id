@@ -111,7 +111,13 @@ ob_end_flush();
                 <div class="field">
                     <label class="label">Category</label>
                     <div class="control">
-                        <input class="input" type="text" name="category" value="<?php echo $row['category']; ?>" required>
+                        <!-- <?php var_dump($row['category']) ?> -->
+                                <select class="input" name="category">
+                                    <option selected disabled> Pilih Category </option>
+                                    <option <?php echo $row['category'] =="Men's Jacket" ? 'selected' : '' ?> > Men's Jacket </option>
+                                    <option <?php echo $row['category'] =="Women's Jacket" ? 'selected' : '' ?> > Women's Jacket </option>
+                                    <option <?php echo $row['category'] =="Kids' Jacket" ? 'selected' : '' ?>> Kids' Jacket </option>
+                         </select>
                     </div>
                 </div>
 

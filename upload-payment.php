@@ -55,8 +55,16 @@ if ($checkOrderResult && mysqli_num_rows($checkOrderResult) > 0) {
         $insertPaymentResult = mysqli_query($conn, $insertPaymentQuery);
 
         if ($insertPaymentResult) {
+          $updateStatusOrder = "UPDATE Orders SET is_paid = 'Y' WHERE order_id = $orderId ";
+          $updateStatusOrderResult = mysqli_query($conn, $updateStatusOrder);
+
+          if($updateStatusOrderResult){
+            header("Location: order-history.php");
+          }else{
+            echo "Berhasil memasukan informasi pembayaran tetapi gagal dalam mengupdate status order.";
+          }
           // Redirect ke halaman berhasil upload dengan mengirimkan ID pembayaran
-          header("Location: index.php");
+          header("Location: order-history.php");
           exit();
         } else {
           // Jika gagal memasukkan informasi pembayaran ke tabel

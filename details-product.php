@@ -38,12 +38,19 @@
             <br>
             <div id="add-to-cart-message"></div>
             <div class="field has-addons">
+              <?php
+               if(isset($_SESSION['user'])){
+              ?>
               <div class="control">
                 <input class="input" type="number" id="quantity" name="quantity" min="1" value="1" onchange="updateQuantity()">
               </div>
               <div class="control">
                 <button type="button" class="button is-primary" onclick="addToCart(<?php echo $productId; ?>)">Buy Now</button>
               </div>
+              <?php } else{
+                  echo '<br>
+                  <p>Login to make a purchase.</p>';
+              } ?>
             </div>
           </div>
         </div>
