@@ -38,6 +38,9 @@
         $('#cancel-signup-button').click(function() {
         $('#modal-signup').removeClass('is-active');
         });
+
+        
     </script>
+    <?php ob_end_flush(); ?>
   </body>
 </html>

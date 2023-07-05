@@ -1,21 +1,28 @@
 <?php
-
+ob_start();
 include 'config/db.php';
 session_start();
+// echo BASE_URL;
 
+// Cek apakah pengguna sudah login
+$userLoggedIn = isset($_SESSION['user']);
 ?>
 
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Jejaketan.id - Toko Jaket Online Kekinian</title>
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>css/bulma.min.css">
-    
-  </head>
-  <body>
-  <!-- Navbar -->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jejaketan.id - Toko Jaket Online Kekinian</title>
+  <link rel="stylesheet" href="<?php echo BASE_URL; ?>css/bulma.min.css">
+  <style>
+    .navbar-item.has-dropdown.is-hoverable + .navbar-item {
+      margin-left: 1rem;
+    }
+  </style>
+</head>
+<body>
+<!-- Navbar -->
 <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
   <!-- Navbar Brand -->
   <div class="navbar-brand">
@@ -28,68 +35,83 @@ session_start();
       <span aria-hidden="true"></span>
     </a>
   </div>
-
-  <!-- Navbar Menu -->
-  <div id="navbarBasicExample" class="navbar-menu">
+<!-- Navbar Menu -->
+<div id="navbarBasicExample" class="navbar-menu">
     <!-- Navbar Start -->
-    <div class="navbar-start">
-        <a class="navbar-item" href="<?php echo BASE_URL ?>">Home</a>
-        <?php 
-        // Periksa apakah pengguna adalah admin
-        if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin') {
-            // Tampilkan menu data pengguna dan data produk
-            echo '
-            <a class="navbar-item" href="'.BASE_URL.'products.php">Products</a>
-            <a class="navbar-item" href="'.BASE_URL.'admin/users.php">[A] Data User</a>
-            <a class="navbar-item" href="'.BASE_URL.'admin/products.php">[A] Data Produk</a>
-            ';
-        } else {
-            // Tampilkan menu biasa
-            echo '
-            <a class="navbar-item" href="./products.php">Products</a>
-            <a class="navbar-item" href="./about.php">About</a>
-            <a class="navbar-item" href="./contact.php">Contact</a>
-            ';
-        }
-        ?>
+     <!-- Navbar Start -->
+     <div class="navbar-start">
+      <a class="navbar-item" href="<?php echo BASE_URL ?>">Home</a>
+      <?php 
+      // Periksa apakah pengguna adalah admin
+      if ($userLoggedIn && $_SESSION['user']['role'] === 'admin') {
+        // Tampilkan menu data pengguna dan data produk
+        echo '
+        <a class="navbar-item" href="'.BASE_URL.'products.php">Products</a>
+        <a class="navbar-item" href="'.BASE_URL.'admin/users.php">[A] Data User</a>
+        <a class="navbar-item" href="'.BASE_URL.'admin/products.php">[A] Data Produk</a>
+        <a class="navbar-item" href="'.BASE_URL.'admin/payments.php">[A] Data Pembayaran</a>
+        ';
+      } else {
+        // Tampilkan menu biasa
+        echo '
+        <a class="navbar-item" href="'.BASE_URL.'products.php">Products</a>
+        <a class="navbar-item" href="'.BASE_URL.'about.php">About</a>
+        <a class="navbar-item" href="'.BASE_URL.'contact.php">Contact</a>
+        ';
+      }
+      ?>
     </div>
 
-
     <!-- Navbar End -->
-    <?php 
-    // Cek apakah pengguna sudah login
-    if (isset($_SESSION['user'])) {
-        // Pengguna sudah login, dapatkan data pengguna
+    <div class="navbar-end">
+      <?php 
+      // Cek apakah pengguna sudah login
+      if ($userLoggedIn) {
+        // Dapatkan data pengguna
         $user = $_SESSION['user'];
-    
+        
+        // Tampilkan menu keranjang dengan jarak
+        echo '
+            <div class="navbar-item">
+              <a class="button is-primary" href="'.BASE_URL.'order-history.php">
+                <span>Order History</span>
+              </a>
+            </div>
+              <div class="navbar-item">
+                <a class="button is-primary" href="'.BASE_URL.'cart.php">
+                  <img src="'.BASE_URL.'image_assets/cart-shopping-solid.svg" style="width: 20px; height: 20px; margin-right: 5px;fill: #FFFFFF;">
+                  <span>Cart</span>
+                </a>
+               </div>
+               
+      ';
+        
         // Tampilkan tombol dropdown nama pengguna dan menu logout
         echo '
-        <div class="navbar-end">
-          <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link">' . $user['full_name'] . '</a>
-            <div class="navbar-dropdown">
-              <a class="navbar-item" href="'.BASE_URL.'/profile.php">Profile</a>
-              <a class="navbar-item" href="'.BASE_URL.'/config/logout.php">Logout</a>
-            </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">' . $user['full_name'] . '</div>
+          <div class="navbar-dropdown is-right">
+            <a class="navbar-item" href="'.BASE_URL.'profile.php">Profile</a>
+            <a class="navbar-item" href="'.BASE_URL.'config/logout.php">Logout</a>
           </div>
         </div>';
-    } else {
+        
+      } else {
         // Pengguna belum login, tampilkan tombol sign up dan log in
         echo '
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="buttons">
-              <a class="button is-primary" href="#" id="signup-button">
-                <strong>Sign up</strong>
-              </a>
-              <a class="button is-light" href="#" id="login-button">
-                Log in
-              </a>
-            </div>
+        <div class="navbar-item">
+          <div class="buttons">
+            <a class="button is-primary" href="#" id="signup-button">
+              <strong>Sign up</strong>
+            </a>
+            <a class="button is-light" href="#" id="login-button">
+              Log in
+            </a>
           </div>
         </div>';
-    }
-    ?>
+      }
+      ?>
+    </div>
   </div>
 </nav>
 
@@ -124,6 +146,7 @@ session_start();
             <button class="button is-primary" type="submit">Log in</button>
           </div>
         </div>
+        
       </form>
     </section>
   </div>
